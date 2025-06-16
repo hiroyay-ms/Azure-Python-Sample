@@ -33,14 +33,16 @@ jobs:
         run: pip install -r ./src/SimpleWeb/requirements.txt
       
       - name: Zip artifact for deployment
-        run: zip -j release.zip ./src/SimpleWeb/*
+        run: |
+          cd ./src/SimpleWeb
+          zip -j release.zip ./*
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-simple-app
           path: |
-            release.zip
+            ./src/SimpleWeb/release.zip
             !venv/
 
   deploy:
