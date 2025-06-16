@@ -33,7 +33,7 @@ jobs:
         run: pip install -r ./src/SimpleWeb/requirements.txt
       
       - name: Zip artifact for deployment
-        run: zip release.zip ./src/SimpleWeb/* -r
+        run: zip -j release.zip ./src/SimpleWeb/*
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
