@@ -6,7 +6,7 @@ on:
       app-name:
         description: 'Name of the Azure Web App'
         required: true
-        default: 'app-test-3p'
+        default: 'app-test-3pa'
 
 
 jobs:
