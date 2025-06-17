@@ -1,4 +1,6 @@
 Flask
 Flask-Session
-gunicorn
+requests
+identity
+python-dotenv
 msal
