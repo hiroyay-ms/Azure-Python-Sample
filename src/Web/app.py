@@ -18,7 +18,7 @@ def index():
 def welcome():
     if not session.get("user"):
         return redirect(url_for("login"))
-    return render_template('welcom.html', title='Welcome', user=session["user"])
+    return render_template('welcome.html', title='Welcome', user=session["user"])
 
 def _build_msal_app(cache=None):
     return msal.ConfidentialClientApplication(
