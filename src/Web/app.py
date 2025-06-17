@@ -1,6 +1,6 @@
 import uuid
 from flask import *
-from flask_session import Session
+from flask_session.__init__ import Session
 import msal
 
 import app_config
