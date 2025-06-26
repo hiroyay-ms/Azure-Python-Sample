@@ -15,10 +15,10 @@ def index():
     return render_template('index.html', title='Home', is_authenticated=session.get("user"))
 
 @app.route('/protect')
-def welcome():
+def protect():
     if not session.get("user"):
         return redirect(url_for("login"))
-    return render_template('protect.html', title='Welcome', user=session["user"], is_authenticated=session.get("user"))
+    return render_template('protect.html', title='Protect', user=session["user"], is_authenticated=session.get("user"))
 
 def _build_msal_app(cache=None):
     return msal.ConfidentialClientApplication(
