@@ -59,7 +59,7 @@ def authorized():
 @app.route('/login')
 def login():
     global redirect_url
-    redirect_url = request.referre
+    redirect_url = request.referrer
     session["state"] = str(uuid.uuid4())
     auth_url = _build_msal_app().get_authorization_request_url(
         app_config.SCOPE,
