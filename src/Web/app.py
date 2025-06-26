@@ -51,7 +51,7 @@ def authorized():
     )
     session["user"] = result.get("id_token_claims")
     _save_cache(cache)
-    return redirect(request.referrer)
+    return redirect(url_for("index"))
 
 @app.route('/login')
 def login():
