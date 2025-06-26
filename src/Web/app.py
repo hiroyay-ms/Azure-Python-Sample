@@ -40,7 +40,7 @@ def _save_cache(cache):
 
 @app.route('/getAToken')
 def authorized():
-    print('Request for authorized endpoint received')
+    print('Request for authorized endpoint received.', request.referrer)
     if request.args['state'] != session.get("state"):
         return redirect(url_for("login"))
     cache = _load_cache()
@@ -51,7 +51,7 @@ def authorized():
     )
     session["user"] = result.get("id_token_claims")
     _save_cache(cache)
-    return redirect(url_for(request.referrer))
+    return redirect(request.referrer)
 
 @app.route('/login')
 def login():
