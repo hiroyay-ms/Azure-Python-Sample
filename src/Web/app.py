@@ -1,3 +1,4 @@
+import requests
 import uuid
 from flask import *
 from flask_session import Session
@@ -12,13 +13,13 @@ Session(app)
 @app.route('/')
 def index():
     print('Request for index page received', app_config.CLIENT_ID)
-    return render_template('index.html', title='Home')
+    return render_template('index.html', title='Home', is_authenticated=session.get("user"))
 
-@app.route('/welcome')
+@app.route('/protect')
 def welcome():
     if not session.get("user"):
         return redirect(url_for("login"))
-    return render_template('welcome.html', title='Welcome', user=session["user"])
+    return render_template('protect.html', title='Welcome', user=session["user"], is_authenticated=session.get("user"))
 
 def _build_msal_app(cache=None):
     return msal.ConfidentialClientApplication(
@@ -51,7 +52,7 @@ def authorized():
     )
     session["user"] = result.get("id_token_claims")
     _save_cache(cache)
-    return redirect(url_for("index"))
+    return redirect(url_for(request.referrer))
 
 @app.route('/login')
 def login():
