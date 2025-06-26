@@ -1,0 +1,24 @@
+name: Push Container Image to Azure Container Registry
+
+on:
+  workflow_dispatch:
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      
+      - run: |
+          docker build -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/python-auth:${{ github.sha }} -f ./src/Web/Dockerfile .
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/python-auth:${{ github.sha }}
