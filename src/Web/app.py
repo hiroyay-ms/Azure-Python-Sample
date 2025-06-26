@@ -1,4 +1,3 @@
-import requests
 import uuid
 from flask import *
 from flask_session import Session
