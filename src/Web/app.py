@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object(app_config)
 Session(app)
 
-redirect_url = ''
+referrer_url = ''
 
 @app.route('/')
 def index():
@@ -42,8 +42,8 @@ def _save_cache(cache):
 
 @app.route('/getAToken')
 def authorized():
-    global redirect_url
-    print('Request for authorized endpoint received.', redirect_url)
+    global referrer_url
+    print('Request for authorized endpoint received.', referrer_url)
     if request.args['state'] != session.get("state"):
         return redirect(url_for("login"))
     cache = _load_cache()
@@ -54,12 +54,12 @@ def authorized():
     )
     session["user"] = result.get("id_token_claims")
     _save_cache(cache)
-    return redirect(redirect_url)
+    return redirect(referrer_url)
 
 @app.route('/login')
 def login():
-    global redirect_url
-    redirect_url = request.referrer
+    global referrer_url
+    referrer_url = request.referrer
     session["state"] = str(uuid.uuid4())
     auth_url = _build_msal_app().get_authorization_request_url(
         app_config.SCOPE,
